@@ -1,43 +1,92 @@
-// Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
-
-function createWindow () {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+const { app, BrowserWindow } = require('electron')
+const computerName = require('computer-name')
+var config = require('C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json');
+var monitor = config.MONITOR;
+if (monitor == 1){
+  monitorsize = 0; }
+  else
+  {
+  monitorsize = -1000; }
+const createWindow = () => {
+  const onlineStatusWindow = new BrowserWindow({
+    width: 400,
+    height: 100,
+    x: monitorsize,
+    y: 0,
+    fullscreen: true,
+    autoHideMenuBar: true
+  })
+  require('update-electron-app')()
+var internetAvailable = require("internet-available");
+// Set a timeout and a limit of attempts to check for connection
+const fs = require("fs");
+fs.readFile("C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json", "utf8", (err, jsonString) => {
+  if (err) {
+    console.log("File read failed:", err);
+    return;
+  }
+    onlineStatusWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.control && input.key.toLowerCase() === 'c') {
+      console.log('Pressed Control+C')
+      onlineStatusWindow.openDevTools();
     }
   })
+  var open = 1;
+  var config = require('C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json');
+  console.log("File data:", config.URL);
+  onlineStatusWindow.loadURL(config.URL);
+  setInterval(function(){
+   internetAvailable({
+    timeout: 4000,
+    retries: 3,
+}).then(function(){
+    if (open == 0){
+      console.log("Internet available");
+    onlineStatusWindow.loadURL(config.URL);
+    // onlineStatusWindow.loadURL(config.URL + computerName()) HOSTNAME
+    open = 1;
+    }
+}).catch(function(){
+    if (open == 1 && config.CHECK_CONNECTION == 1){
+      console.log("No internet");
+    onlineStatusWindow.loadFile('index.html')
+    open = 0; }
+});
+}, 100); 
+});
+setInterval(function(){
+app.relaunch()
+app.exit()
+}, config.RESTART_INTERVAL);
 
-  // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+var time;
+if (config.CHECK_PAGECRASH == 1){
+window.onload = function(){
+    time = setTimeout(function(){
+        document.location.reload(); 
+    }, config.REFRESH_ON_ERROR_INTERVAL);
+};
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+document.onreadystatechange = function() {
+    if (document.readyState == "complete") {
+        clearTimeout(time);
+    }
 }
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+}
+}
 app.whenReady().then(() => {
   createWindow()
+  
 
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow()
+    }
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
