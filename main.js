@@ -1,7 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const computerName = require('computer-name')
-var config = require('C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json');
-var monitor = config.MONITOR;
+var monitor = 2;
 if (monitor == 1){
   monitorsize = 0; }
   else
@@ -17,10 +16,12 @@ const createWindow = () => {
     autoHideMenuBar: true
   })
   require('update-electron-app')()
+  const app = require('electron').app;
+  app.isPackaged(true)
 var internetAvailable = require("internet-available");
 // Set a timeout and a limit of attempts to check for connection
 const fs = require("fs");
-fs.readFile("C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json", "utf8", (err, jsonString) => {
+fs.readFile(app.getPath('desktop') + '\\\JSApp\\config.json', "utf8", (err, jsonString) => {
   if (err) {
     console.log("File read failed:", err);
     return;
@@ -32,7 +33,7 @@ fs.readFile("C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json", "utf8", (err,
     }
   })
   var open = 1;
-  var config = require('C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json');
+  var config = require(app.getPath('desktop') + '\\\JSApp\\config.json');
   console.log("File data:", config.URL);
   onlineStatusWindow.loadURL(config.URL);
   setInterval(function(){

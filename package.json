@@ -2,6 +2,7 @@
   "name": "JSApp",
   "productName": "JSApp",
   "description": "My Electron application description",
+  "repository": "https://github.com/sanelcivic/1.0v",
   "keywords": [],
   "main": "./main.js",
   "version": "1.0.0",
@@ -11,8 +12,8 @@
   },
   "dependencies": {
     "computer-name": "0.1.0",
-    "package.json": "^2.0.1",
     "electron-packager": "17.1.1",
+    "package.json": "^2.0.1",
     "update-electron-app": "2.0.1"
   },
   "devDependencies": {
