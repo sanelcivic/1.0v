@@ -1,9 +1,0 @@
-{
-    "URL" : "https://board.marovt.ccleap.com/?hostname=I-ODRO-5",
-    "MONITOR" : "1",
-	"REFRESH_ON_ERROR_INTERVAL" : "10000",
-	"RESTART_INTERVAL" : "86400000",
-	"CHECK_CONNECTION" : "1",
-	"CHECK_PAGECRASH" : "1",
-	"FAILURE_REFRESH_INTERVAL" : "60"
-}
