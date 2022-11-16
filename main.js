@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 const computerName = require('computer-name')
-var monitor = 2;
+var config = require(app.getPath('desktop') + '\\\JSApp\\config.json');
+var monitor = config.MONITOR;
 if (monitor == 1){
   monitorsize = 0; }
   else
@@ -17,7 +18,7 @@ const createWindow = () => {
   })
   require('update-electron-app')()
   const app = require('electron').app;
-  app.isPackaged(true)
+  var isPackaged = !process.defaultApp;
 var internetAvailable = require("internet-available");
 // Set a timeout and a limit of attempts to check for connection
 const fs = require("fs");
