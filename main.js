@@ -1,7 +1,9 @@
 const { app, BrowserWindow } = require('electron')
 const computerName = require('computer-name')
-var config = require(app.getPath('desktop') + '\\\JSApp\\config.json');
+var config = require('C:\\Users\\sanel.civic\\Desktop\\JSApp\\config.json');
+const fs = require("fs");
 var monitor = config.MONITOR;
+var path = require('path');
 if (monitor == 1){
   monitorsize = 0; }
   else
@@ -16,15 +18,16 @@ const createWindow = () => {
     fullscreen: true,
     autoHideMenuBar: true
   })
-  require('update-electron-app')()
-  const app = require('electron').app;
-  var isPackaged = !process.defaultApp;
+
+  //onlineStatusWindow.openDevTools();
+  
 var internetAvailable = require("internet-available");
+	 fs.appendFileSync('message.txt', app.getPath('exe'));
 // Set a timeout and a limit of attempts to check for connection
-const fs = require("fs");
-fs.readFile(app.getPath('desktop') + '\\\JSApp\\config.json', "utf8", (err, jsonString) => {
+fs.readFile(app.getPath('desktop') + '\\\Terminal\\config.json', "utf8", (err, jsonString) => {
   if (err) {
     console.log("File read failed:", err);
+    fs.appendFileSync('message.txt', err);
     return;
   }
     onlineStatusWindow.webContents.on('before-input-event', (event, input) => {
@@ -33,9 +36,11 @@ fs.readFile(app.getPath('desktop') + '\\\JSApp\\config.json', "utf8", (err, json
       onlineStatusWindow.openDevTools();
     }
   })
+  //require('update-electron-app')()
   var open = 1;
-  var config = require(app.getPath('desktop') + '\\\JSApp\\config.json');
+  var config = require(app.getPath('desktop') + '\\\Terminal\\config.json');
   console.log("File data:", config.URL);
+  fs.appendFileSync('message.txt', config.URL);
   onlineStatusWindow.loadURL(config.URL);
   setInterval(function(){
    internetAvailable({
@@ -60,21 +65,6 @@ setInterval(function(){
 app.relaunch()
 app.exit()
 }, config.RESTART_INTERVAL);
-
-var time;
-if (config.CHECK_PAGECRASH == 1){
-window.onload = function(){
-    time = setTimeout(function(){
-        document.location.reload(); 
-    }, config.REFRESH_ON_ERROR_INTERVAL);
-};
-
-document.onreadystatechange = function() {
-    if (document.readyState == "complete") {
-        clearTimeout(time);
-    }
-}
-}
 }
 app.whenReady().then(() => {
   createWindow()

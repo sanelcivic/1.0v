@@ -1,21 +1,24 @@
 {
-  "name": "JSApp",
-  "productName": "JSApp",
+  "name": "app",
+  "productName": "app",
   "description": "My Electron application description",
-  "repository": "https://github.com/sanelcivic/1.0v",
   "keywords": [],
   "main": "./main.js",
-  "license": "MIT",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "author": "Sanel.Civic",
   "scripts": {
     "start": "electron ."
   },
   "dependencies": {
     "computer-name": "0.1.0",
-    "electron-packager": "17.1.1",
+    "electron-squirrel-startup": "1.0.0",
+    "internet-available": "1.0.0",
     "package.json": "^2.0.1",
-    "update-electron-app": "2.0.1"
+    "@electron-forge/cli": "6.0.3",
+    "@electron-forge/maker-deb": "6.0.3",
+    "@electron-forge/maker-rpm": "6.0.3",
+    "@electron-forge/maker-squirrel": "6.0.3",
+    "@electron-forge/maker-zip": "6.0.3"
   },
   "devDependencies": {
     "electron": "20.1.4"
