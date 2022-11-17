@@ -4,7 +4,7 @@
   "description": "My Electron application description",
   "keywords": [],
   "main": "./main.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Sanel.Civic",
   "repository": "https://github.com/sanelcivic/1.0v",
   "scripts": {
